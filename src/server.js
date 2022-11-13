@@ -1,7 +1,10 @@
-import cors from 'cors';
-import express from 'express';
+require('express-async-errors');
 
-import { AppError } from './config/AppError'; 
+const cors = require('cors');
+const express = require('express');
+
+const routes = require('./routes');
+const handlingErrors = require('./middlewares/handlingErrors');
 
 const server = express();
 
@@ -9,16 +12,16 @@ const HOSTNAME = "localhost";
 const PORT = 3333;
 
 server.use(cors());
+
 server.use(express.json());
 
-server.use((request, response, next) => {
-	console.log(`${new Date().toISOString()} -- ${request.method}: ${request.url}`); next();
-});
+server.use(routes);
 
-express.use((error, request, response, next) => {
-	if ( error instanceof AppError ) {
-		
-	}
-});
+// server.use((request, response, next) => {
+// 	console.log(`${new Date().toISOString()} -- ${request.method}: ${request.url}`);
+// 	next();
+// });
+
+server.use(handlingErrors);
 
 server.listen(PORT, () => console.log(`Server is running at http://${HOSTNAME}:${PORT}/`));
