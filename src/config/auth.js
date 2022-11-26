@@ -1,15 +1,10 @@
-class JwtConfig {
-   static jwtConfig() {
-      return {jwt: {
+class Jwt {
+   static Config() {
+      return {
          secret: "default",
-         expiresIn: "2d"
-      }};
-   }
+         expiresIn: "2d",
+      }
+   };
 }
 
-// module.exports = {
-//    jwt: {
-//       secret: "default",
-//       expiresIn: "2d"
-//    }
-// }
+module.exports = Jwt;
