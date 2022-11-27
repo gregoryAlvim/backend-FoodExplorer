@@ -25,7 +25,9 @@ class UserCreateService {
 
       const hashedPassword = await hash(password, SALT_ROUNDS);
 
-      await this.userRepository.create({ name, email, password: hashedPassword });
+      const { userId } = await this.userRepository.create({ name, email, password: hashedPassword });
+      
+      await this.userRepository.linkUserToRole({ userId });
    }
 }
 
