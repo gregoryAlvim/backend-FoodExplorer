@@ -1,7 +1,7 @@
 const { compare } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 
-const authConfig = require('../config/auth');
+const Jwt = require('../config/auth');
 const AppError = require('../utils/AppError');
 
 class SessionCreateService {
@@ -13,7 +13,7 @@ class SessionCreateService {
       const user = await this.userRepository.checkUserExist(email);
 
       if (!user) {
-         throw new AppError(" E-mail e/ou senha incorretos! ", 401);
+         throw new AppError(" E-mail não está vinculado a um cadastro! ", 401);
       }
 
       const matchedPassword = await compare(password, user.password);
@@ -22,9 +22,11 @@ class SessionCreateService {
          throw new AppError(" E-mail e/ou senha incorretos! ", 401);
       }
 
-      const { secret, expiresIn } = authConfig.jwt;
+      const { secret, expiresIn } = Jwt.Config();
+      
+      const userRole = await this.userRepository.findUserRole(email);
 
-      const token = sign({}, secret, {
+      const token = sign({ role: userRole }, secret, {
          subject: String(user.id),
          expiresIn
       });
