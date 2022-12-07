@@ -7,6 +7,4 @@ exports.up = knex => knex.schema.createTable("users_roles", table => {
 
 });
 
-
-
 exports.down = knex => knex.schema.dropTable("users_roles");
