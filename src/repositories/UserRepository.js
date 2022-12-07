@@ -14,7 +14,11 @@ class UserRepository {
    };
 
    async linkUserToRole({ userId }) {
-      const { id: roleId } = await knex("roles").where({ name: "User" }).first();
+
+      const checkUsers = await knex("users");
+      const nameRole = checkUsers.length === 1 ? "Admin" : "User";
+
+      const { id: roleId } = await knex("roles").where({ name: nameRole }).first();
       
       await knex("users_roles").insert({ userId, roleId });
    };
@@ -24,6 +28,12 @@ class UserRepository {
       const { name:userRole } = await knex.from("users_roles").innerJoin("roles", "roleId", "id").where({ userId }).first();
       
       return userRole;
+   };
+
+   async show({ userId }) {
+      const userData = await knex("users").where({ id: userId }).first();
+
+      return userData;
    };
 };
 
