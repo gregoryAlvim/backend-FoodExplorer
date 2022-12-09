@@ -8,6 +8,7 @@ const whoCanAccess = require('../middlewares/ensuredPermissions');
 const dishesRoutes = new Router();
 
 dishesRoutes.post("/create-dish", ensuredAuthenticated, whoCanAccess(["Admin"]), dishesController.create);
+dishesRoutes.put("/update-dish/:id", ensuredAuthenticated, whoCanAccess(["Admin"]), dishesController.update);
 dishesRoutes.get("/show-dish/:id", ensuredAuthenticated, dishesController.show);
 
 module.exports = dishesRoutes;
