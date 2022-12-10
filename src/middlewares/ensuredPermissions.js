@@ -9,7 +9,7 @@ function whoCanAccess (acceptRole) {
       const roleExists = roles.some((role) => acceptRole.includes(role));
 
       if (!roleExists) {
-         throw new AppError(" Apenas o administrador pode acessar está página! ", 401);
+         throw new AppError("Apenas o administrador pode acessar está página! ", 401);
       }
 
       next();
