@@ -5,7 +5,7 @@ class DishCreateService {
       this.dishRepository = dishRepository;
    }
 
-   async execute({ name, description, price }) {
+   async execute({ name, description, price, ingredients }) {
 
       if (!name || !description || !price) {
          throw new AppError("Todos os campos são obrigatórios!");
@@ -13,7 +13,7 @@ class DishCreateService {
          throw new AppError("O valor do prato deve ser maior que 0.00 R$");
       }
 
-      this.dishRepository.create({ name, description, price });
+      this.dishRepository.create({ name, description, price, ingredients });
 
    }
 
