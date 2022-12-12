@@ -7,6 +7,7 @@ const routes = require('./routes');
 const sqliteConnection = require('./database/sqlite');
 const form = require('./utils/functions/formattedDate');
 const handlingErrors = require('./middlewares/handlingErrors');
+const uploadConfig = require('./config/upload');
 
 const date = form();
 const server = express();
@@ -17,6 +18,8 @@ const PORT = 3333;
 server.use(cors());
 
 server.use(express.json());
+
+server.use("/files", express.static(uploadConfig.UPLOADS_FOLDER));
 
 server.use(routes);
 
