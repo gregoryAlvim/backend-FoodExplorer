@@ -10,7 +10,7 @@ class SessionCreateService {
    }
 
    async execute({ email, password }) {
-      const user = await this.userRepository.checkUserExist(email);
+      let user = await this.userRepository.checkUserExist(email);
 
       if (!user) {
          throw new AppError(" E-mail não está vinculado a um cadastro! ", 401);
@@ -30,6 +30,11 @@ class SessionCreateService {
          subject: String(user.id),
          expiresIn
       });
+
+      user = {
+         ...user,
+         role: userRole
+      };
 
       return { user, token };
    }
