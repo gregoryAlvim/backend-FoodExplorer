@@ -6,13 +6,16 @@ class DishShowService {
    }
 
    async execute({ id:dishId }) {
-      const dishData = await this.dishRepository.show({ dishId });
+      const { dishData, ingredientsData } = await this.dishRepository.show({ dishId });
 
       if (!dishData) {
          throw new AppError("O prato não foi encontrado!");
       }
 
-      return dishData;
+      return {
+         ...dishData,
+         ingredientsData
+      };
    }
 }
 
