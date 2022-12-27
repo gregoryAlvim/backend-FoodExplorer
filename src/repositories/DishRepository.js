@@ -1,8 +1,8 @@
 const knex = require('../database/knex');
 
 class DishRepository {
-   async create({ name, description, price, ingredients }) {
-      const dishId = await knex("dishes").insert({ name, description, price });
+   async create({ name, description, category, price, ingredients }) {
+      const dishId = await knex("dishes").insert({ name, description, category, price });
 
       const ingredientsInsert = ingredients.map( ingredient => {
          return {
@@ -14,8 +14,8 @@ class DishRepository {
       await knex("ingredients").insert(ingredientsInsert);
    }
 
-   async update({ dishId, dishName, dishDescription, dishPrice, dishIngredients }) {
-      await knex("dishes").update({ name: dishName, description: dishDescription, price: dishPrice }).where({ id: dishId });
+   async update({ dishId, dishName, dishDescription, dishCategory, dishPrice, dishIngredients }) {
+      await knex("dishes").update({ name: dishName, description: dishDescription, category: dishCategory, price: dishPrice }).where({ id: dishId });
 
       const ingredientsUpdate = dishIngredients.map( ingredient => {
          return {
@@ -28,8 +28,28 @@ class DishRepository {
       await knex("ingredients").insert(ingredientsUpdate);
    }
 
-   async index() {
-      const dishesData = await knex("dishes");
+   async index({ dishName }) {
+      
+      let dishes;
+
+      if (dishName) {
+         dishes = await knex("dishes").whereLike("name", `%${dishName}%`).orderBy("name");
+      } else {
+         dishes = await knex("dishes").orderBy("name");
+      }
+      
+      const ingredients = await knex("ingredients");
+
+      const dishesWithIngredients = dishes.map(dish => {
+         const ingredientsData = ingredients.filter( ingredients => ingredients.dishId === dish.id);
+
+         return {
+            ...dish,
+            ingredientsData
+         }
+      });
+
+      const dishesData = dishesWithIngredients;
 
       return dishesData;
    }
@@ -39,9 +59,13 @@ class DishRepository {
       const ingredientsData = await knex("ingredients").select('id', 'name').where({ dishId }).orderBy("name");
 
       return {
-         ...dishData,
+         dishData,
          ingredientsData
       };
+   }
+
+   async updateImage({ dishId, dishData }) {
+      await knex("dishes").update(dishData).where({ id: dishId });
    }
 }
 
