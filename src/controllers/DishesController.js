@@ -6,33 +6,35 @@ const DishShowService = require('../services/dishes/DishShowService');
 
 class DishesController {
    async create(request, response) {
-      const { name, description, price, ingredients } = request.body;
+      const { name, description, category, price, ingredients } = request.body;
 
       const dishRepository = new DishRepository();
       const dishCreateService = new DishCreateService(dishRepository);
 
-      await dishCreateService.execute({ name, description, price, ingredients });
+      await dishCreateService.execute({ name, description, category, price, ingredients });
 
       return response.status(201).json("Novo prato cadastrado com sucesso!");
    }
 
    async update(request, response) {
       const { id } = request.params;
-      const { name, description, price, ingredients } = request.body;
+      const { name, description, category, price, ingredients } = request.body;
 
       const dishRepository = new DishRepository();
       const dishUpdateService = new DishUpdateService(dishRepository);
 
-      await dishUpdateService.execute({ id, name, description, price, ingredients });
+      await dishUpdateService.execute({ id, name, description, category, price, ingredients });
 
       return response.status(201).json("Prato atualizado com sucesso!");
    }
 
    async index (request, response) {
+      const { dishName, ingredients } = request.query;
+
       const dishRepository = new DishRepository();
       const dishIndexService = new DishIndexService(dishRepository);
 
-      const dishesData = await dishIndexService.execute();
+      const dishesData = await dishIndexService.execute({ dishName, ingredients });
 
       return response.json(dishesData);
    }
