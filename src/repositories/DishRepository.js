@@ -12,6 +12,8 @@ class DishRepository {
       });
 
       await knex("ingredients").insert(ingredientsInsert);
+
+      return dishId;
    }
 
    async update({ dishId, dishName, dishDescription, dishCategory, dishPrice, dishIngredients }) {
@@ -28,7 +30,7 @@ class DishRepository {
       await knex("ingredients").insert(ingredientsUpdate);
    }
 
-   async index({ dishName }) {
+   async index({ dishName}) {
       
       let dishes;
 
@@ -63,6 +65,11 @@ class DishRepository {
          ingredientsData
       };
    }
+
+   async delete({ dishId }) {
+      await knex("dishes").where({ id: dishId }).delete();
+   }
+
 
    async updateImage({ dishId, dishData }) {
       await knex("dishes").update(dishData).where({ id: dishId });
