@@ -3,6 +3,7 @@ const DishCreateService = require('../services/dishes/DishCreateService');
 const DishUpdateService = require('../services/dishes/DishUpdateService');
 const DishIndexService = require('../services/dishes/DishIndexService');
 const DishShowService = require('../services/dishes/DishShowService');
+const DishDeleteService = require('../services/dishes/DishDeleteService');
 
 class DishesController {
    async create(request, response) {
@@ -11,9 +12,12 @@ class DishesController {
       const dishRepository = new DishRepository();
       const dishCreateService = new DishCreateService(dishRepository);
 
-      await dishCreateService.execute({ name, description, category, price, ingredients });
+      const dishId = await dishCreateService.execute({ name, description, category, price, ingredients });
 
-      return response.status(201).json("Novo prato cadastrado com sucesso!");
+      return response.status(201).json({
+         dishId,
+         message: "Novo prato cadastrado com sucesso!"
+      });
    }
 
    async update(request, response) {
@@ -29,12 +33,12 @@ class DishesController {
    }
 
    async index (request, response) {
-      const { dishName, ingredients } = request.query;
+      const { dishName } = request.query;
 
       const dishRepository = new DishRepository();
       const dishIndexService = new DishIndexService(dishRepository);
 
-      const dishesData = await dishIndexService.execute({ dishName, ingredients });
+      const dishesData = await dishIndexService.execute({ dishName });
 
       return response.json(dishesData);
    }
@@ -48,6 +52,17 @@ class DishesController {
       const dishData = await dishShowService.execute({ id });
 
       return response.json(dishData);
+   }
+
+   async delete(request, response) {
+      const { id } = request.params;
+
+      const dishRepository = new DishRepository();
+      const dishDeleteService = new DishDeleteService(dishRepository);
+
+      await dishDeleteService.execute({ id });
+
+      return response.status(200).json("Prato deletado com sucesso!");
    }
 }
 
