@@ -12,6 +12,8 @@ class DishShowService {
          throw new AppError("O prato não foi encontrado!");
       }
 
+      dishData.price = String(dishData.price).replace(".", ",");
+
       return {
          ...dishData,
          ingredientsData
