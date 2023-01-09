@@ -17,7 +17,10 @@ dishesRoutes.put("/update-dish/:id", ensuredAuthenticated, whoCanAccess(["Admin"
 
 dishesRoutes.patch("/update-dish-image/:id", ensuredAuthenticated, whoCanAccess(["Admin"]), upload.single("dishImage"), dishImageController.update);
 
+dishesRoutes.delete("/delete-dish/:id", ensuredAuthenticated, whoCanAccess(["Admin"]), dishesController.delete);
+
 dishesRoutes.get("/index-dishes", ensuredAuthenticated, dishesController.index);
 dishesRoutes.get("/show-dish/:id", ensuredAuthenticated, dishesController.show);
+
 
 module.exports = dishesRoutes;
