@@ -13,8 +13,11 @@ class DishCreateService {
          throw new AppError("O valor do prato deve ser maior que 0.00 R$");
       }
 
-      this.dishRepository.create({ name, description, category, price, ingredients });
+      price = price.replace(",", ".");
 
+      const dishId = this.dishRepository.create({ name, description, category, price, ingredients });
+
+      return dishId;
    }
 
 }
