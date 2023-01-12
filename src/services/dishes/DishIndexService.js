@@ -5,8 +5,8 @@ class DishIndexService {
       this.dishRepository = dishRepository;
    }
 
-   async execute({ dishName, ingredients }) {
-      const dishesData = await this.dishRepository.index({ dishName, ingredients });
+   async execute({ dishName }) {
+      const dishesData = await this.dishRepository.index({ dishName });
 
       if (dishesData.length <= 0) {
          throw new AppError("Nenhum prato foi encontrado!");
