@@ -1,4 +1,5 @@
 require('express-async-errors');
+require('dotenv/config');
 
 const cors = require('cors');
 const express = require('express');
@@ -12,8 +13,8 @@ const uploadConfig = require('./config/upload');
 const date = form();
 const server = express();
 
-const HOSTNAME = "localhost";
-const PORT = 3333;
+const HOSTNAME = process.env.SERVER_HOSTNAME || "localhost";
+const PORT = process.env.SERVER_PORT || 3333;
 
 server.use(cors());
 
