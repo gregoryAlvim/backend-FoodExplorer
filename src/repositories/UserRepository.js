@@ -8,9 +8,11 @@ class UserRepository {
    };
 
    async create({ name, email, password }) {
-      const userId = await knex("users").insert({ name, email, password });
+      let userId = await knex("users").insert({ name, email, password });
 
-      return { userId: userId };
+      userId = userId[0];
+
+      return { userId };
    };
 
    async linkUserToRole({ userId }) {
