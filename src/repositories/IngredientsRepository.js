@@ -6,6 +6,10 @@ class IngredientsRepository {
 
       return dishIngredientsData;
    }
+
+   async delete({ ingredient }) {
+      await knex("ingredients").whereLike("name", `${ingredient}`).delete();
+   }
 }
 
 module.exports = IngredientsRepository;
