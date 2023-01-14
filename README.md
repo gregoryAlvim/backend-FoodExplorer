@@ -120,6 +120,8 @@ $ npm run dev
 # O servidor inciará na porta:3333 - acesse <   http://127.0.0.1:5173/ >
 ```
 ---
+## Deploy do projeto.
+https://food-explorer-9137.netlify.app/
 
 ## Autor
 
