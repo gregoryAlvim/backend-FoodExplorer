@@ -60,7 +60,7 @@ O layout da aplicação está disponível no Figma:
 
 ## Tecnologias
 
-Tecnologias utilizadas no Frontend:
+Tecnologias utilizadas no Backend:
 
 - [JavaScript](https://www.w3schools.com/js/)
 - [Node.js](https://nodejs.org/en/)
