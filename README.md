@@ -1,7 +1,3 @@
-<h4 align="center">
-   🚧 README em construção... 🚧
-</h4>
-
 <h1>
     <a href="#"> Food Explorer </a>
 </h1>
