@@ -19,6 +19,8 @@
    <a href="#autor"> Autor </a> 
 </p>
 
+https://user-images.githubusercontent.com/43592358/212474283-dbb0af2c-89c6-4fbd-b9c4-15be249c07c1.mp4
+
 ## Sobre
 
 O Food Explorer é um cardápio digital, onde o administrador do restaurante pode salvar e gerenciar os pratos do cardápio. Já o usuário tem a possibilidade de ver os pratos e fazer seus pedidos.
